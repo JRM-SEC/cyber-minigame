@@ -19,9 +19,9 @@ document.getElementById("login-btn").addEventListener("click", function() {
 
   const validInjections = [
     "' or '1'='1",
-    "admin' --",
-    "' or 1=1--",
-    "') or ('1'='1--"
+    "`admin' --`",
+    "`' or 1=1--`",
+    "`') or '1'='1--`"
   ];
 
   // Comprobar si alguna coincidencia está en user o pass
