@@ -2,26 +2,22 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Cyber MiniGame</title>
+<title>Cyber MiniGame Interactivo</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
-  <h1>¡Encuentra las Flags de Seguridad!</h1>
-  <p>Descubre vulnerabilidades y aprende ciberseguridad mientras juegas.</p>
+  <h1>¡Cyber MiniGame Interactivo!</h1>
+  <p>Prueba vulnerabilidades simuladas y encuentra las flags. 🔐</p>
 
-  <div id="game">
-    <button class="flag-btn" data-flag="1">Revisar formulario web</button>
-    <button class="flag-btn" data-flag="2">Analizar URL</button>
-    <button class="flag-btn" data-flag="3">Inspeccionar login</button>
-    <button class="flag-btn" data-flag="4">Examinar headers HTTP</button>
-    <button class="flag-btn" data-flag="5">Probar contraseña débil</button>
+  <div class="scenario" id="scenario-xss">
+    <h2>XSS Simulado</h2>
+    <p>Escribe un texto que contenga "<script>" para detectar XSS:</p>
+    <input type="text" id="xss-input" placeholder="Escribe aquí">
   </div>
 
-  <div id="quiz"></div>
-  <div id="score">Flags encontradas: 0/5</div>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
+  <div class="scenario" id="scenario-sqli">
+    <h2>SQL Injection Simulado</h2>
+    <p>Login ficticio. Intenta inyectar:</p>
+    <input type="text" id="user" placeholder="Usuario">
+    <input type="te
