@@ -1,53 +1,66 @@
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #1b1b2f;
-  color: #fff;
-  text-align: center;
-  padding: 30px;
-}
+let score = 0;
+const totalFlags = 5;
 
-.container {
-  max-width: 700px;
-  margin: auto;
-}
+// XSS
+document.getElementById("xss-input").addEventListener("input", function() {
+  const value = this.value.toLowerCase();
+  if(value.includes("<script>")) {
+    alert("¡Flag XSS encontrada! 🛡️");
+    score++;
+    this.disabled = true;
+    updateScore();
+  }
+});
 
-h1 {
-  color: #00ffff;
-}
+// SQLi
+document.getElementById("login-btn").addEventListener("click", function() {
+  const user = document.getElementById("user").value;
+  const pass = document.getElementById("pass").value;
 
-.scenario {
-  background-color: #162447;
-  margin: 15px 0;
-  padding: 15px;
-  border-radius: 8px;
-}
+  if(user.includes("' or '1'='1") || pass.includes("' or '1'='1")) {
+    alert("¡Flag SQLi encontrada! 💻");
+    score++;
+    document.getElementById("user").disabled = true;
+    document.getElementById("pass").disabled = true;
+    this.disabled = true;
+    updateScore();
+  } else {
+    alert("Login fallido, prueba otra inyección.");
+  }
+});
 
-input {
-  padding: 8px;
-  margin: 5px;
-  border-radius: 5px;
-  border: none;
-  width: 200px;
-}
+// Contraseña débil
+document.getElementById("try-pass").addEventListener("click", function() {
+  const pass = document.getElementById("guess").value;
+  if(pass === "12345") {
+    alert("¡Flag contraseña débil encontrada! 🔑");
+    score++;
+    document.getElementById("guess").disabled = true;
+    this.disabled = true;
+    updateScore();
+  } else {
+    alert("Incorrecto, intenta otra contraseña.");
+  }
+});
 
-button {
-  margin: 5px;
-  padding: 8px 20px;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background-color: #0f3460;
-  color: #fff;
-  transition: 0.3s;
-}
+// Headers inseguros
+document.getElementById("check-header").addEventListener("click", function() {
+  const header = document.getElementById("header-input").value.toLowerCase();
+  if(header === "x-frame-options: deny") {
+    alert("¡Flag header inseguro encontrada! 🌐");
+    score++;
+    document.getElementById("header-input").disabled = true;
+    this.disabled = true;
+    updateScore();
+  } else {
+    alert("Cabecera incorrecta, prueba otra.");
+  }
+});
 
-button:hover {
-  background-color: #28a745;
-}
-
-#score {
-  margin-top: 20px;
-  font-size: 20px;
-  color: #00ff7f;
+// Función para actualizar puntuación y mostrar mensaje final
+function updateScore() {
+  document.getElementById("score").textContent = `Flags encontradas: ${score}/${totalFlags}`;
+  if(score === totalFlags) {
+    alert("¡Felicidades! Has encontrado todas las flags. 🏆");
+  }
 }
