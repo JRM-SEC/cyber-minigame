@@ -1,58 +1,66 @@
 let score = 0;
 const totalFlags = 5;
 
-const flags = {
-  1: {
-    message: "Flag 1: XSS detectado! 🛡️",
-    question: "¿Qué significa XSS? (a) Cross-site Scripting, (b) Extra Secure System",
-    answer: "a"
-  },
-  2: {
-    message: "Flag 2: Posible SQL Injection! 💻",
-    question: "¿Qué busca un ataque SQLi? (a) Inyectar código SQL, (b) Cambiar contraseña",
-    answer: "a"
-  },
-  3: {
-    message: "Flag 3: Login vulnerable a fuerza bruta! 🔐",
-    question: "¿Qué es una fuerza bruta? (a) Probar múltiples contraseñas, (b) Robar cookies",
-    answer: "a"
-  },
-  4: {
-    message: "Flag 4: Headers inseguros detectados! 🌐",
-    question: "¿Para qué sirven los headers HTTP? (a) Controlar seguridad y caché, (b) Mostrar imágenes",
-    answer: "a"
-  },
-  5: {
-    message: "Flag 5: Contraseña débil encontrada! 🔑",
-    question: "¿Qué hace que una contraseña sea segura? (a) Largo + símbolos + números, (b) Solo letras",
-    answer: "a"
+// XSS
+document.getElementById("xss-input").addEventListener("input", function() {
+  const value = this.value.toLowerCase();
+  if(value.includes("<script>")) {
+    alert("¡Flag XSS encontrada! 🛡️");
+    score++;
+    this.disabled = true;
+    updateScore();
   }
-};
-
-document.querySelectorAll(".flag-btn").forEach(btn => {
-  btn.addEventListener("click", function() {
-    const flagId = this.getAttribute("data-flag");
-    const flag = flags[flagId];
-
-    document.getElementById("quiz").innerHTML = `
-      ${flag.message}<br>
-      ${flag.question}<br>
-      <input type="text" id="answer" placeholder="Escribe a o b">
-      <button id="submitAnswer">Responder</button>
-    `;
-
-    document.getElementById("submitAnswer").addEventListener("click", function() {
-      const userAnswer = document.getElementById("answer").value.toLowerCase();
-      if(userAnswer === flag.answer) {
-        alert("Correcto! ✅");
-        score++;
-        document.getElementById("score").textContent = `Flags encontradas: ${score}/${totalFlags}`;
-        document.getElementById("quiz").innerHTML = "";
-        btn.disabled = true;
-        btn.style.backgroundColor = "#28a745";
-      } else {
-        alert("Incorrecto ❌. Intenta de nuevo!");
-      }
-    });
-  });
 });
+
+// SQLi
+document.getElementById("login-btn").addEventListener("click", function() {
+  const user = document.getElementById("user").value;
+  const pass = document.getElementById("pass").value;
+
+  if(user.includes("' or '1'='1") || pass.includes("' or '1'='1")) {
+    alert("¡Flag SQLi encontrada! 💻");
+    score++;
+    document.getElementById("user").disabled = true;
+    document.getElementById("pass").disabled = true;
+    this.disabled = true;
+    updateScore();
+  } else {
+    alert("Login fallido, prueba otra inyección.");
+  }
+});
+
+// Contraseña débil
+document.getElementById("try-pass").addEventListener("click", function() {
+  const pass = document.getElementById("guess").value;
+  if(pass === "12345") {
+    alert("¡Flag contraseña débil encontrada! 🔑");
+    score++;
+    document.getElementById("guess").disabled = true;
+    this.disabled = true;
+    updateScore();
+  } else {
+    alert("Incorrecto, intenta otra contraseña.");
+  }
+});
+
+// Headers inseguros
+document.getElementById("check-header").addEventListener("click", function() {
+  const header = document.getElementById("header-input").value.toLowerCase();
+  if(header === "x-frame-options: deny") {
+    alert("¡Flag header inseguro encontrada! 🌐");
+    score++;
+    document.getElementById("header-input").disabled = true;
+    this.disabled = true;
+    updateScore();
+  } else {
+    alert("Cabecera incorrecta, prueba otra.");
+  }
+});
+
+// Función para actualizar puntuación y mostrar mensaje final
+function updateScore() {
+  document.getElementById("score").textContent = `Flags encontradas: ${score}/${totalFlags}`;
+  if(score === totalFlags) {
+    alert("¡Felicidades! Has encontrado todas las flags. 🏆");
+  }
+}
