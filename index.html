@@ -12,7 +12,7 @@
 
   <div class="scenario" id="scenario-xss">
     <h2>XSS Simulado</h2>
-    <p>Escribe un texto que contenga "<script>" para detectar XSS:</p>
+    <p>Escribe un texto que contenga "&lt;script&gt;" para detectar XSS:</p>
     <input type="text" id="xss-input" placeholder="Escribe aquí">
   </div>
 
@@ -20,4 +20,32 @@
     <h2>SQL Injection Simulado</h2>
     <p>Login ficticio. Intenta inyectar:</p>
     <input type="text" id="user" placeholder="Usuario">
-    <input type="te
+    <input type="text" id="pass" placeholder="Contraseña">
+    <button id="login-btn">Login</button>
+  </div>
+
+  <div class="scenario" id="scenario-brute">
+    <h2>Fuerza Bruta</h2>
+    <p>Adivina la contraseña débil:</p>
+    <input type="text" id="guess" placeholder="Escribe la contraseña">
+    <button id="try-pass">Probar</button>
+  </div>
+
+  <div class="scenario" id="scenario-headers">
+    <h2>Headers Inseguros</h2>
+    <p>Encuentra la cabecera insegura: escribe "X-Frame-Options: DENY"</p>
+    <input type="text" id="header-input" placeholder="Cabecera">
+    <button id="check-header">Comprobar</button>
+  </div>
+
+  <div class="scenario" id="scenario-final">
+    <h2>Flag Final</h2>
+    <p>Has encontrado todas las flags, ¡felicidades! 🏆</p>
+  </div>
+
+  <div id="score">Flags encontradas: 0/5</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
