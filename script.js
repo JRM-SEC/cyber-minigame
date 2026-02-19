@@ -14,10 +14,20 @@ document.getElementById("xss-input").addEventListener("input", function() {
 
 // SQLi
 document.getElementById("login-btn").addEventListener("click", function() {
-  const user = document.getElementById("user").value;
-  const pass = document.getElementById("pass").value;
+  const user = document.getElementById("user").value.toLowerCase();
+  const pass = document.getElementById("pass").value.toLowerCase();
 
-  if(user.includes("' or '1'='1") || pass.includes("' or '1'='1")) {
+  const validInjections = [
+    "' or '1'='1",
+    "admin' --",
+    "' or 1=1--",
+    "') or ('1'='1--"
+  ];
+
+  // Comprobar si alguna coincidencia está en user o pass
+  const isInjection = validInjections.some(inj => user.includes(inj) || pass.includes(inj));
+
+  if(isInjection) {
     alert("¡Flag SQLi encontrada! 💻");
     score++;
     document.getElementById("user").disabled = true;
@@ -28,6 +38,7 @@ document.getElementById("login-btn").addEventListener("click", function() {
     alert("Login fallido, prueba otra inyección.");
   }
 });
+
 
 // Contraseña débil
 document.getElementById("try-pass").addEventListener("click", function() {
