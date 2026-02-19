@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cyber MiniGame</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>¡Encuentra las Flags de Seguridad!</h1>
+  <p>Descubre vulnerabilidades y aprende ciberseguridad mientras juegas.</p>
+
+  <div id="game">
+    <button class="flag-btn" data-flag="1">Revisar formulario web</button>
+    <button class="flag-btn" data-flag="2">Analizar URL</button>
+    <button class="flag-btn" data-flag="3">Inspeccionar login</button>
+    <button class="flag-btn" data-flag="4">Examinar headers HTTP</button>
+    <button class="flag-btn" data-flag="5">Probar contraseña débil</button>
+  </div>
+
+  <div id="quiz"></div>
+  <div id="score">Flags encontradas: 0/5</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
